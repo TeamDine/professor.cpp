@@ -184,74 +184,138 @@ std::string Professor::toStringProduction() {
 
 
 bool Professor::emptyCourses() {
-
+    return docencia == -1;
     }
 
 bool Professor::fullCourses() {
-
+    return docencia == 10;
     }
 
-void Professor::insertCourses(int&, Courses&) {
-
+void Professor::insertCourses(int& p, Courses& c) {
+    if(fullCourses()) {
+        throw ListException ("\t\t\tDesbordamiento de datos\n\t\t***ERROR: EN INSERCION DE DATOS (DOCENCIA)***");
+        }
+    courses[p+1] = c;
+    docencia++;
     }
 
-void Professor::deleteCourses(int&) {
-
+void Professor::deleteCourses(int& p) {
+    if(emptyCourses()){
+        throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN ELIMINACION DE DATOS (DOCENCIA)***");
+    }
+    int i = p;
+    while( i < docencia ) {
+        courses[i] = courses[i+1];
+        i++;
+        }
+    docencia--;
     }
 
 int Professor::getLastCourses() {
-
+    if(emptyCourses()){
+        return -1;
+    }
+    return docencia;
     }
 
 int Professor::getFirstCourses() {
-
+    if(emptyCourses()){
+        return -1;
+    }
+    return 0;
     }
 
-Courses Professor::returnCourse(const int&) {
-
+Courses Professor::returnCourse(const int& p) {
+    if(emptyCourses() or p < 0 or p > docencia){
+        throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN BUSQUEDA DE DATOS (DOCENCIA)***");
+    }
+    return courses[p];
     }
 
-bool Professor::findCourses(std::string&) {
-
+bool Professor::findCourses(std::string& n) {
+    for (int i = 0; i < docencia; i++){
+        if (n == courses[i].getName()){
+            return true;
+        }
+    }
+    return false;
     }
 
 std::string Professor::toStringCourses() {
-
+    std::string result;
+    
+    for( int i = 0; i <= docencia; i++){
+        result += courses[i].toString();
+        result += "\n";
     }
-/***
-bool Professor::emptyTutorial() {
+    
+    return result;
 
+bool Professor::emptyTutorial() {
+    return tutoria == -1;
     }
 
 bool Professor::fullTutorial() {
-
+    return tutoria == 10;
     }
 
-void Professor::insertTutorial(int&, Tutorial&) {
-
+void Professor::insertTutorial(int& p, Tutorial& t) {
+    if(fullTutorial()) {
+        throw ListException ("\t\t\tDesbordamiento de datos\n\t\t***ERROR: EN INSERCION DE DATOS (TUTORIAS)***");
+        }
+    student[p+1] = a;
+    tutoria++;
     }
 
-void Professor::deleteTutorial(int&) {
-
+void Professor::deleteTutorial(int& p) {
+    if(emptyTutorial()){
+        throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN ELIMINACION DE DATOS (TUTORIAS)***");
+    }
+    int i = p;
+    while( i < tutoria ) {
+        student[i] = student[i+1];
+        i++;
+        }
+    tutoria--;
     }
 
 int Professor::getLastTutorial() {
-
+    if(emptyTutorial()){
+        return -1;
+    }
+    return tutoria;
     }
 
 int Professor::getFirstTutorial() {
-
+    if(emptyTutorial()){
+        return -1;
+    }
+    return 0;
     }
 
-Tutorial Professor::returnTutorial(const int&) {
-
+Tutorial Professor::returnTutorial(const int& p) {
+    if(emptyTutorial() or p < 0 or p > tutoria){
+        throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN BUSQUEDA DE DATOS (TUTORIAS)***");
+    }
+    return student[p];
     }
 
-bool Professor::findTutorial(std::string&) {
-
+bool Professor::findTutorial(Name& n) {
+    for(int i = 0; i < tutoria; i++){
+        if (n.toString() == student[i].toString()){
+            return true;
+        }
+    }
+    return false;
     }
 
 std::string Professor::toStringTutorial() {
-
+    std::string result;
+    
+    for( int i = 0; i <= tutoria; i++){
+        result += student[i].toString();
+        result += "\n";
     }
-**/
+    
+    return result;
+    }
