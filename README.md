@@ -31,7 +31,7 @@ void Professor::insertFormation(int& p, Formation& f) {
     if(fullFormation()) {
         throw ListException ("\t\t\tDesbordamiento de datos\n\t\t***ERROR: EN INSERCION DE DATOS (FORMACION ACADEMICA)***");
         }
-    schoolarship[p+1] = f;
+    school[p+1] = f;
     formacion++;
     }
 
@@ -41,7 +41,7 @@ void Professor::deleteFormation(int& p) {
     }
     int i = p;
     while( i < formacion ) {
-        schoolarship[i] = schoolarship[i+1];
+        school[i] = school[i+1];
         i++;
         }
     formacion--;
@@ -65,12 +65,12 @@ Formation Professor::returnFormation(const int& p) {
     if(emptyFormation() or p < 0 or p > formacion){
         throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN BUSQUEDA DE DATOS (FORMACION ACADEMICA)***");
     }
-    return schoolarship[p];
+    return school[p];
     }
 
 bool Professor::findFormation(std::string& id) {
-    for (int i = 0; i < formacion; i++){
-        if (id == schoolarship[i].getIdCard()){
+    for (int i = 0; i <= formacion; i++){
+        if (id == school[i].getIdCard()){
             return true;
         }
     }
@@ -82,26 +82,25 @@ std::string Professor::toStringFormation() {
 
     for(int i = 0; i <= formacion; i++){
         result += "Grado: ";
-        result += schoolarship[i].getGrade();
+        result += school[i].getGrade();
         result += "Carrera: ";
-        result += schoolarship[i].getGradeName();
+        result += school[i].getGradeName();
         result += "Institucion: ";
-        result += schoolarship[i].getInstitution();
+        result += school[i].getInstitution();
         result += "Fecha ingreso: ";
-        result += schoolarship[i].getBeginDate().toString();
+        result += school[i].getBeginDate().toString();
         result += "Fecha egreso: ";
-        result += schoolarship[i].getFinishDate().toString();
+        result += school[i].getFinishDate().toString();
         result += "Fecha Titulo: ";
-        result += schoolarship[i].getDegreeDate().toString();
+        result += school[i].getDegreeDate().toString();
         result += "ID: ";
-        result += schoolarship[i].getIdCard();
+        result += school[i].getIdCard();
         result += "\n";
     }
     return result;
     }
 
 /******************************** PRODUCCION ACADEMICA ****************************************/
-
 
 bool Professor::emptyProduction() {
     return produccion == -1;
@@ -153,7 +152,7 @@ AcademicProduction Professor::returnProduction(const int& p) {
     }
 
 bool Professor::findProduction(std::string& id) {
-    for(int i = 0; i < produccion; i++){
+    for(int i = 0; i <= produccion; i++){
         if (id == perfomance[i].getId()){
             return true;
         }
@@ -182,6 +181,7 @@ std::string Professor::toStringProduction() {
     return result;
     }
 
+/******************************** DOCENCIA ****************************************/
 
 bool Professor::emptyCourses() {
     return docencia == -1;
@@ -191,7 +191,7 @@ bool Professor::fullCourses() {
     return docencia == 10;
     }
 
-void Professor::insertCourses(int& p, Courses& c) {
+void Professor::insertCourses(int& p, Teaching& c) {
     if(fullCourses()) {
         throw ListException ("\t\t\tDesbordamiento de datos\n\t\t***ERROR: EN INSERCION DE DATOS (DOCENCIA)***");
         }
@@ -225,7 +225,7 @@ int Professor::getFirstCourses() {
     return 0;
     }
 
-Courses Professor::returnCourse(const int& p) {
+Teaching Professor::returnCourse(const int& p) {
     if(emptyCourses() or p < 0 or p > docencia){
         throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN BUSQUEDA DE DATOS (DOCENCIA)***");
     }
@@ -233,7 +233,7 @@ Courses Professor::returnCourse(const int& p) {
     }
 
 bool Professor::findCourses(std::string& n) {
-    for (int i = 0; i < docencia; i++){
+    for(int i = 0; i <= docencia; i++){
         if (n == courses[i].getName()){
             return true;
         }
@@ -243,14 +243,15 @@ bool Professor::findCourses(std::string& n) {
 
 std::string Professor::toStringCourses() {
     std::string result;
-    
-    for( int i = 0; i <= docencia; i++){
+
+    for(int i = 0; i <= docencia; i++){
         result += courses[i].toString();
         result += "\n";
     }
-    
     return result;
+    }
 
+/******************************** TUTORIAS ****************************************/
 bool Professor::emptyTutorial() {
     return tutoria == -1;
     }
@@ -259,11 +260,11 @@ bool Professor::fullTutorial() {
     return tutoria == 10;
     }
 
-void Professor::insertTutorial(int& p, Tutorial& t) {
+void Professor::insertTutorial(int& p, Tutorials& t) {
     if(fullTutorial()) {
         throw ListException ("\t\t\tDesbordamiento de datos\n\t\t***ERROR: EN INSERCION DE DATOS (TUTORIAS)***");
         }
-    student[p+1] = a;
+    student[p+1] = t;
     tutoria++;
     }
 
@@ -293,7 +294,7 @@ int Professor::getFirstTutorial() {
     return 0;
     }
 
-Tutorial Professor::returnTutorial(const int& p) {
+Tutorials Professor::returnTutorial(const int& p) {
     if(emptyTutorial() or p < 0 or p > tutoria){
         throw ListException ("Desbordamiento de datos\n\t\t***ERROR: EN BUSQUEDA DE DATOS (TUTORIAS)***");
     }
@@ -311,11 +312,11 @@ bool Professor::findTutorial(Name& n) {
 
 std::string Professor::toStringTutorial() {
     std::string result;
-    
+
     for( int i = 0; i <= tutoria; i++){
         result += student[i].toString();
         result += "\n";
     }
-    
+
     return result;
     }
